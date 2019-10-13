@@ -1,6 +1,7 @@
 # Reproject
 
 [![Build Status](https://travis-ci.com/JuliaAstro/Reproject.jl.svg?branch=master)](https://travis-ci.com/JuliaAstro/Reproject.jl)
+[![Build status](https://ci.appveyor.com/api/projects/status/xnkvvas56dwp444i?svg=true)](https://ci.appveyor.com/project/aquatiko/reproject-jl)
 [![Coveralls](https://coveralls.io/repos/github/JuliaAstro/Reproject.jl/badge.svg?branch=master)](https://coveralls.io/github/JuliaAstro/Reproject.jl?branch=master)
 [![GitHub release](https://img.shields.io/github/release/JuliaAstro/Reproject.jl.svg)](https://github.com/JuliaAstro/Reproject.jl/releases/)
 [![HitCount](http://hits.dwyl.io/JuliaAstro/Reproject.jl.svg)](http://hits.dwyl.io/JuliaAstro/Reproject.jl)
