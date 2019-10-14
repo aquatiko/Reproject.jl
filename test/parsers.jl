@@ -60,6 +60,7 @@ using Reproject: parse_input_data, parse_output_projection
         @test result[1] isa Array
         @test result[2] isa WCSTransform
     end
+    rm(fname, force = true)
 end
 
 @testset "output parser" begin
@@ -105,4 +106,5 @@ end
         @test result[2] isa Tuple
         @test_throws DomainError parse_output_projection(wcs, ())
     end
+    rm(fname, force = true)
 end

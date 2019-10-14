@@ -54,4 +54,5 @@ end
     write(f, indata; header=inhdr)
     @test_throws ArgumentError reproject(f[1], imgin, shape_out = (100,100))
     close(f)
+    rm(fname, force = true)
 end
