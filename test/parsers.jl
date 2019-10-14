@@ -69,50 +69,50 @@ using Reproject: parse_input_data, parse_output_projection
     rm(fname, force = true)
 end
 
-@testset "output parser" begin
-    fname = tempname() * ".fits"
-    f = FITS(fname, "w")
-    inhdr = FITSHeader(["FLTKEY", "INTKEY", "BOOLKEY", "STRKEY", "COMMENT",
-                        "HISTORY"],
-                       [1.0, 1, true, "string value", nothing, nothing],
-                       ["floating point keyword",
-                        "",
-                        "boolean keyword",
-                        "string value",
-                        "this is a comment",
-                        "this is a history"])
+# @testset "output parser" begin
+#     fname = tempname() * ".fits"
+#     f = FITS(fname, "w")
+#     inhdr = FITSHeader(["FLTKEY", "INTKEY", "BOOLKEY", "STRKEY", "COMMENT",
+#                         "HISTORY"],
+#                        [1.0, 1, true, "string value", nothing, nothing],
+#                        ["floating point keyword",
+#                         "",
+#                         "boolean keyword",
+#                         "string value",
+#                         "this is a comment",
+#                         "this is a history"])
 
-    indata = reshape(Float32[1:100;], 5, 20)
-    write(f, indata; header=inhdr)
-    close(f)
+#     indata = reshape(Float32[1:100;], 5, 20)
+#     write(f, indata; header=inhdr)
+#     close(f)
 
-    @testset "ImageHDU type" begin
-        f = FITS(fname)
-        result = parse_output_projection(f[1], (12,12))
-        @test result[1] isa WCSTransform
-        @test result[2] isa Tuple
-        @test_throws DomainError parse_output_projection(f[1], ())
-        close(f)
-    end
+#     @testset "ImageHDU type" begin
+#         f = FITS(fname)
+#         result = parse_output_projection(f[1], (12,12))
+#         @test result[1] isa WCSTransform
+#         @test result[2] isa Tuple
+#         @test_throws DomainError parse_output_projection(f[1], ())
+#         close(f)
+#     end
 
-    @testset "String filename" begin
-        result = parse_output_projection(fname, 1)
-        @test result[1] isa WCSTransform
-        @test result[2] isa Tuple
-    end
+#     @testset "String filename" begin
+#         result = parse_output_projection(fname, 1)
+#         @test result[1] isa WCSTransform
+#         @test result[2] isa Tuple
+#     end
 
-    wcs = WCSTransform(2;
-                          cdelt = [-0.066667, 0.066667],
-                          ctype = ["RA---AIR", "DEC--AIR"],
-                          crpix = [-234.75, 8.3393],
-                          crval = [0., -90],
-                          pv    = [(2, 1, 45.0)])
+#     wcs = WCSTransform(2;
+#                           cdelt = [-0.066667, 0.066667],
+#                           ctype = ["RA---AIR", "DEC--AIR"],
+#                           crpix = [-234.75, 8.3393],
+#                           crval = [0., -90],
+#                           pv    = [(2, 1, 45.0)])
 
-    @testset "WCSTransform input" begin
-        result = parse_output_projection(wcs, (12,12))
-        @test result[1] isa WCSTransform
-        @test result[2] isa Tuple
-        @test_throws DomainError parse_output_projection(wcs, ())
-    end
-    rm(fname, force = true)
-end
+#     @testset "WCSTransform input" begin
+#         result = parse_output_projection(wcs, (12,12))
+#         @test result[1] isa WCSTransform
+#         @test result[2] isa Tuple
+#         @test_throws DomainError parse_output_projection(wcs, ())
+#     end
+#     rm(fname, force = true)
+# end
