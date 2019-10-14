@@ -14,11 +14,14 @@ using Reproject: parse_input_data, parse_output_projection
 
     indata = reshape(Float32[1:100;], 5, 20)
     write(f, indata; header=inhdr)
+    close(f)
 
     @testset "ImageHDU type" begin
+        f = FITS(fname)
         result = parse_input_data(f[1])
         @test result[1] isa Array
         @test result[2] isa WCSTransform
+        close(f)
     end
 
     @testset "data matrix and WCSTransform tuple" begin
@@ -34,11 +37,12 @@ using Reproject: parse_input_data, parse_output_projection
     end
 
     @testset "Single HDU FITS file" begin
+        f = FITS(fname)
         result = parse_input_data(f, 1)
         @test result[1] isa Array
         @test result[2] isa WCSTransform
+        close(f)
     end
-    close(f)
 
     @testset "String filename input" begin
         result = parse_input_data(fname, 1)
@@ -46,11 +50,13 @@ using Reproject: parse_input_data, parse_output_projection
         @test result[2] isa WCSTransform
     end
 
-    f = FITS(fname, "w")
-    write(f, indata; header=inhdr)
-    write(f, indata; header=inhdr)
+    FITS(fname, "w") do f
+        write(f, indata; header=inhdr)
+        write(f, indata; header=inhdr)
+    end
 
     @testset "Multiple HDU FITS file" begin
+        f = FITS(fname)
         result = parse_input_data(f, 2)
         @test result[1] isa Array
         @test result[2] isa WCSTransform
