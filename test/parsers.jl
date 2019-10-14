@@ -84,14 +84,16 @@ end
 
     indata = reshape(Float32[1:100;], 5, 20)
     write(f, indata; header=inhdr)
+    close(f)
 
     @testset "ImageHDU type" begin
+        f = FITS(fname)
         result = parse_output_projection(f[1], (12,12))
         @test result[1] isa WCSTransform
         @test result[2] isa Tuple
         @test_throws DomainError parse_output_projection(f[1], ())
+        close(f)
     end
-    close(f)
 
     @testset "String filename" begin
         result = parse_output_projection(fname, 1)
