@@ -50,7 +50,7 @@ end
                         "this is a comment",
                         "this is a history"])
 
-    indata = reshape(Float32[1:100;], 5, 20)
+    indata = reshape(Float32[1:10                                                                                                                                                                           0;], 5, 20)
     write(f, indata; header=inhdr)
     @test_throws ArgumentError reproject(f[1], imgin, shape_out = (100,100))
     close(f)
